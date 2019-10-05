@@ -4,3 +4,6 @@ pytest==5.0.1
 pytest-cover==3.0.0
 Flask==1.1.1
 flask-sqlalchemy==2.4.1
+python-dotenv==0.10.3
+click==7.0
+npyscreen==4.10.5

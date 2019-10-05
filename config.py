@@ -10,11 +10,14 @@ def get_env_variable(name):
 
 
 def create_db_url(_type, db, user=None, pw=None, url=None):
-    if type == "postgresql":
+    if _type == "postgresql":
+        print(f"URL String: {_type}://{user}:{pw}@{url}/{db}")
         return f"{_type}://{user}:{pw}@{url}/{db}"
-    elif type == "mysql":
+    elif _type == "mysql":
+        print(f"URL String: {_type}://{user}:{pw}@{url}/{db}")
         return f"{_type}://{user}:{pw}@{url}/{db}"
-    elif type == "sqlite":
+    elif _type == "sqlite":
+        print(f"URL String: {_type}:///{db}")
         return f"{_type}:///{db}"
     else:
         return "Invalid DB specified"
@@ -23,23 +26,25 @@ def create_db_url(_type, db, user=None, pw=None, url=None):
 # TODO: Switch to using dotenv
 def get_env_db_url(env_setting):
     if env_setting == "development":
-        _TYPE = get_env_variable("DEV_DBTYPE")
-        USER = get_env_variable("DEV_USER")
-        PW = get_env_variable("DEV_PW")
-        URL = get_env_variable("DEV_URL")
-        DB = get_env_variable("DEV_DB")
+        _TYPE = "sqlite"
+        USER = ""
+        PW = ""
+        URL = ""
+        DB = "simplewiki_dev.sqlite"
     elif env_setting == "testing":
-        _TYPE = get_env_variable("TEST_DBTYPE")
-        USER = get_env_variable("TEST_USER")
-        PW = get_env_variable("TEST_PW")
-        URL = get_env_variable("TEST_URL")
-        DB = get_env_variable("TEST_DB")
+        _TYPE = "sqlite"
+        USER = ""
+        PW = ""
+        URL = ""
+        DB = ""
     elif env_setting == "production":
-        _TYPE = get_env_variable("PROD_DBTYPE")
-        USER = get_env_variable("PROD_USER")
-        PW = get_env_variable("PROD_PW")
-        URL = get_env_variable("PROD_URL")
-        DB = get_env_variable("PROD_DB")
+        _TYPE = "sqlite"
+        USER = ""
+        PW = ""
+        URL = ""
+        DB = "simplewiki_prod.sqlite"
+
+    print(f"DB Environment: {_TYPE} {USER} {PW} {URL} {DB} ")
 
     return create_db_url(_TYPE, USER, PW, URL, DB)
 
