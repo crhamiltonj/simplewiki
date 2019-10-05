@@ -1,13 +1,28 @@
 import npyscreen
 
 
-def myFunction(*args):
-    F = npyscreen.Form(name="My Test Application")
-    F.add(npyscreen.TitleText, name="First Widget")
-    F.edit()
+class myEmployeeForm(npyscreen.Form):
+    def afterEditing(self):
+        self.parentApp.setNextForm(None)
+
+    def create(self):
+        super(myEmployeeForm, self).create()
+        self.myName = self.add(npyscreen.TitleText, name="Name")
+        self.myDepartment = self.add(
+            npyscreen.TitleSelectOne,
+            scroll_exit=True,
+            max_height=3,
+            name="Department",
+            values=["Department 1", "Department 2", "Department 3"],
+        )
+        self.myDate = self.add(npyscreen.TitleDateCombo, name="Date Employed")
+
+
+class MyApplication(npyscreen.NPSAppManaged):
+    def onStart(self):
+        self.addForm("MAIN", myEmployeeForm, name="New Employee")
 
 
 if __name__ == "__main__":
-    npyscreen.wrapper_basic(myFunction)
-    print("Blink and you missed it!")
-
+    TestApp = MyApplication().run()
+    print("All objects, baby.")
